@@ -11,3 +11,63 @@ You need to clone the tests and run them on your server. The tests will fail (of
 
 The best solution, will become the levelX champion and their solution will be added to the repo for everyone else to see how it's done.
 
+LEVEL1:
+======
+Level 1 is relatively simple and doesn;t require much experience with Ansible.
+
+This is what I'd like to see if you pass:
+
+<details>
+ <summary>Expand for Successful output</summary>
+  <p>
+    
+````
+[ec2-user@ip-172-31-16-55 test_yourself]$ ansible-playbook level1.yml
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match
+'all'
+
+PLAY [tests] **********************************************************************************************************
+
+TASK [store date output for timezone check] ***************************************************************************
+changed: [localhost]
+
+TASK [check tz] *******************************************************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Check if NGINX is installed] ************************************************************************************
+ok: [localhost]
+
+TASK [confirm nginx is installed] *************************************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Check if port 80 is listening] **********************************************************************************
+changed: [localhost]
+
+TASK [confirm port 80 is listening] ***********************************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [collect index.html contents] ************************************************************************************
+changed: [localhost]
+
+TASK [confirm string in index.html] ***********************************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP ************************************************************************************************************
+localhost                  : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+````
+</p></details>
+
+Level2 will follow shortly.
