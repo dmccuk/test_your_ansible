@@ -6,6 +6,8 @@ Every month or so, I'll upload a new "level" file. It will contain "assert" test
 
 Think of this as a game. Can you write the ansible you need to pass the test?
 
+New levels will get progressively harder.
+
 ## How will it work?
 You'll need to clone the tests and run them on your server. The tests will fail the first time they are run (of course!). You must write the correct ansible code to pass the tests. Once you're successful, create an issue and add your GitHub repo . I'll run your Ansible code on a clean server, then my "Assert" playbook and see if you passed.
 
