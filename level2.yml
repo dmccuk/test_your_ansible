@@ -1,0 +1,93 @@
+---
+- name: tests
+  hosts: localhost
+  connection: local
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: check sshd_config for X11 forwarding
+      command: grep -i x11 /etc/ssh/sshd_config
+      register: check_x11
+
+    - name: check tz
+      assert:
+        that: "'X11Forwarding yes' in check_x11.stdout"
+      ignore_errors: yes
+
+    - name: Check tom exists
+      shell: grep -i "^tom" /etc/passwd
+      register: check_tom
+      ignore_errors: yes
+
+    - name: confirm tom exists
+      assert:
+        that:
+          - "'tom' in check_tom.stdout"
+          - "'2001' in check_tom.stdout"
+      ignore_errors: yes
+
+    - name: Check dick exists
+      shell: grep -i "^dick" /etc/passwd
+      register: check_dick
+      ignore_errors: yes
+
+    - name: confirm dick exists
+      assert:
+        that:
+          - "'dick' in check_dick.stdout"
+          - "'2002' in check_dick.stdout"
+      ignore_errors: yes
+
+    - name: Check harry exists
+      shell: grep -i "^harry" /etc/passwd
+      register: check_harry
+      ignore_errors: yes
+
+    - name: confirm harry exists
+      assert:
+        that:
+          - "'harry' in check_harry.stdout"
+          - "'3001' in check_harry.stdout"
+      ignore_errors: yes
+ 
+    - name: Check Toms groups
+      command: groups tom
+      register: groups_tom
+      ignore_errors: yes
+ 
+    - name: confirm toms groups
+      assert:
+        that:
+          - "'wheel' in groups_tom.stdout"
+      ignore_errors: yes
+
+    - name: Check dicks groups
+      command: groups dick
+      register: groups_dick
+      ignore_errors: yes
+
+    - name: confirm dicks groups
+      assert:
+        that:
+          - "'wheel' in groups_dick.stdout"
+      ignore_errors: yes
+
+    - name: Check harrys groups
+      command: groups harry
+      register: groups_harry
+      ignore_errors: yes
+
+    - name: confirm harrys groups
+      assert:
+        that:
+          - "'wheel' not in groups_harry.stdout"
+      ignore_errors: yes
+
+    - name: collect MOTD contents
+      command: cat /etc/motd
+      register: motd_contents
+
+    - name: confirm string in MOTD
+      assert:
+         that: "'Unauthorised access is not allowed on this server' in motd_contents.stdout"
+      ignore_errors: yes
