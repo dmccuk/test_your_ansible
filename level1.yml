@@ -1,0 +1,43 @@
+---
+- name: tests
+  hosts: localhost
+  connection: local
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: store date output for timezone check
+      command: date
+      register: check_tz
+
+    - name: check tz
+      assert:
+        that: "'UTC' in check_tz.stdout"
+      ignore_errors: yes
+
+    - name: "Check if NGINX is installed"
+      package_facts:
+        manager: "auto"
+
+    - name: confirm nginx is installed
+      assert:
+        that: "'nginx' in ansible_facts.packages"
+      ignore_errors: yes
+
+    - name: Check if port 80 is listening
+      shell: /usr/sbin/ss -at '( dport = :80 or sport = :80 )'| grep LISTEN
+      register: port_check
+
+    - name: confirm port 80 is listening
+      assert:
+        that: "'0.0.0.0:http' in port_check.stdout"
+      ignore_errors: yes
+
+    - name: collect index.html contents
+      command: cat /usr/share/nginx/html/index.html
+      register: index_html_contents
+
+    - name: confirm string in index.html
+      assert:
+         that: "'Sorry for the inconvenience but' in index_html_contents.stdout"
+      ignore_errors: yes
+
