@@ -1,5 +1,6 @@
 # Test your Ansible
 This repo contains Ansible "Assert" tests. Can you work out what you need to do to pass the tests?
+This is much like TDD where you create the tests that will tell you if you have completed the work.
 
 ## What do you have to do?
 Every month or so, I'll upload a new "level" file. It will contain "assert" tests that you will need to create an ansible playbook to pass. Some will be simple, others will be harder.
