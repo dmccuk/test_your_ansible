@@ -26,7 +26,8 @@
     - name: Check if port 80 is listening
       shell: /usr/sbin/ss -at '( dport = :80 or sport = :80 )'| grep LISTEN
       register: port_check
-
+      ignore_errors: yes
+      
     - name: confirm port 80 is listening
       assert:
         that: "'0.0.0.0:http' in port_check.stdout"
