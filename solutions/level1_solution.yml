@@ -1,0 +1,26 @@
+---
+- name: level1 solutions playbook
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+
+  - name: Set timezone to UTC
+    timezone:
+      name: UTC
+
+  - name: Install nginx
+    package:
+      name: nginx
+      state: installed
+
+  - name: start and enable nginx
+    service:
+      name: nginx
+      state: started
+      enabled: true
+
+  - name: create custom index.html
+    template:
+      src: index.html.j2
+      dest: /usr/share/nginx/html/index.html
