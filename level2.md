@@ -1,7 +1,7 @@
 # Create Ansible to do the following
 
   * Create 3 users [tom:UID 2001, dick:UID 2002 & harry:UID 3001]
-  * For users with a UID > 3000, add them to the "wheel" group
+  * For users with a UID < 3000, add them to the "wheel" group
   * Set X11Forwarding to yes (permanently)
   * Set the MOTD to contain "Unauthorised access is not allowed on this server"
 
