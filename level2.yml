@@ -14,6 +14,8 @@
         that:
           - "'#X11Forwarding yes' not in check_x11.stdout"
           - "'X11Forwarding yes' in check_x11.stdout"
+        success_msg: "X11 is set correctly"
+        fail_msg: "Oh no it's not setup"
       ignore_errors: yes
 
     - name: Check tom exists
@@ -26,6 +28,8 @@
         that:
           - "'tom' in check_tom.stdout"
           - "'2001' in check_tom.stdout"
+        success_msg: "Yay, tom exists"
+        fail_msg: "oh no, tom doesn't exist"
       ignore_errors: yes
 
     - name: Check dick exists
@@ -38,6 +42,8 @@
         that:
           - "'dick' in check_dick.stdout"
           - "'2002' in check_dick.stdout"
+        success_msg: "Yay, dick exists"
+        fail_msg: "oh no, dick doesn't exist"
       ignore_errors: yes
 
     - name: Check harry exists
@@ -50,6 +56,8 @@
         that:
           - "'harry' in check_harry.stdout"
           - "'3001' in check_harry.stdout"
+        success_msg: "Yay, harry exists"
+        fail_msg: "oh no, harry doesn't exist"
       ignore_errors: yes
  
     - name: Check Toms groups
@@ -61,6 +69,8 @@
       assert:
         that:
           - "'wheel' in groups_tom.stdout"
+        success_msg: "Yay, tom is in the wheel group"
+        fail_msg: "oh no, tom isn't in the wheel group"
       ignore_errors: yes
 
     - name: Check dicks groups
@@ -72,6 +82,8 @@
       assert:
         that:
           - "'wheel' in groups_dick.stdout"
+        success_msg: "Yay, dick is in the wheel group"
+        fail_msg: "oh no, dick isn't in the wheel group"
       ignore_errors: yes
 
     - name: collect MOTD contents
@@ -81,4 +93,6 @@
     - name: confirm string in MOTD
       assert:
          that: "'Unauthorised access is not allowed on this server' in motd_contents.stdout"
+         success_msg: "Yay, motd is correct"
+         fail_msg: "oh no, motd is not right"
       ignore_errors: yes
