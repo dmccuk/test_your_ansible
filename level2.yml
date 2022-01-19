@@ -6,12 +6,14 @@
   gather_facts: no
   tasks:
     - name: check sshd_config for X11 forwarding
-      command: grep -i x11 /etc/ssh/sshd_config
+      command: grep -i 'x11' /etc/ssh/sshd_config
       register: check_x11
 
-    - name: check tz
+    - name: check X11 
       assert:
-        that: "'X11Forwarding yes' in check_x11.stdout"
+        that:
+          - "'#X11Forwarding yes' not in check_x11.stdout"
+          - "'X11Forwarding yes' in check_x11.stdout"
       ignore_errors: yes
 
     - name: Check tom exists
@@ -70,17 +72,6 @@
       assert:
         that:
           - "'wheel' in groups_dick.stdout"
-      ignore_errors: yes
-
-    - name: Check harrys groups
-      command: groups harry
-      register: groups_harry
-      ignore_errors: yes
-
-    - name: confirm harrys groups
-      assert:
-        that:
-          - "'wheel' not in groups_harry.stdout"
       ignore_errors: yes
 
     - name: collect MOTD contents

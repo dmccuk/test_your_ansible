@@ -1,0 +1,28 @@
+---
+- name: level 2 solution
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: true
+  tasks:
+    - name: Set X11Forwarding yes
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#X11Forwarding yes'
+        line: 'X11Forwarding yes'
+
+    - name: Add users
+      user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        groups: "{{ item.group }}"
+        state: present
+      loop:
+        - { name: tom, uid: 2001, group: 'wheel' }
+        - { name: dick, uid: 2002, group: 'wheel' }
+        - { name: harry, uid: 3001, group: '' }
+
+    - name: update MOTD
+      lineinfile:
+        path: /etc/motd
+        line: "Unauthorised access is not allowed on this server"
